@@ -31,8 +31,20 @@ const Login = () => {
           .then(res => res.json())
             .then(data => {
                 console.log("admin db", data)
-                setLoggedInUser(data);
-                history.replace(from);
+                if(data != ""){
+                    setLoggedInUser(data);
+                    history.replace(from);
+                }
+
+                else{
+                    console.log("password invalid", data.length);
+                    
+                    console.log(document.querySelector('#errorMessage'));
+                    document.querySelector('#errorMessage').classList.remove('invisible');
+
+                    console.log(document.querySelector('#errorMessage'));
+                }
+                
             })
 
         // console.log("hello");
@@ -41,6 +53,8 @@ const Login = () => {
         // console.log("from", from);
         // console.log(loggedInUser);
         // history.replace(from);
+
+    
         
     }
 
@@ -57,8 +71,9 @@ const Login = () => {
             <input {...register("password", { required: true })} />
             {errors.password && <span>This field is required</span>}<br />
 
-
             <input type="submit" />
+
+            <p id = "errorMessage" className="invisible">Email or Password is incorrect</p>
             </form>
         </div>
     );
