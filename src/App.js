@@ -1,24 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import AddApplicant from './components/Applicant/AddApplicant';
+import Applicants from './components/Applicant/Applicants';
+import Login from './components/Login/Login';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import { createContext, useState } from 'react';
+export const UserContext = createContext();
+
+
 
 function App() {
+
+  const [loggedInUser, setLoggedInUser] = useState({});
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+    <Router>
+    <div>
+      <ul>
+        <li>
+          <Link to="/">addApplicant</Link>
+        </li>
+        <li>
+          <Link to="/applicants">Applicants</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      </ul>
+      <hr />
+      <Switch>
+        <Route exact path="/">
+          <AddApplicant></AddApplicant>
+        </Route>
+        <PrivateRoute path="/applicants">
+          <Applicants></Applicants>
+        </PrivateRoute>
+        <Route path="/login">
+          <Login></Login>
+        </Route>
+      </Switch>
     </div>
+  </Router>
+  </UserContext.Provider>
   );
 }
 
