@@ -12,8 +12,14 @@ const Applicants = () => {
     
     console.log(applicants);
 
+    const handleLogout = event => {
+        localStorage.setItem("cabcl-admin", JSON.stringify([]));
+        window.location.reload();
+    }
+
     return (
         <div>
+            <p>Login User Name: {JSON.parse(localStorage.getItem("cabcl-admin")).name} <button onClick={handleLogout}>Logout</button></p>
             <h1>Applicants</h1>
             <div className="row d-flex justify-content-center">
             {

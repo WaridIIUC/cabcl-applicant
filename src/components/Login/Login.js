@@ -32,8 +32,9 @@ const Login = () => {
             .then(data => {
                 console.log("admin db", data)
                 if(data != ""){
+                    localStorage.setItem("cabcl-admin", JSON.stringify(data));
                     setLoggedInUser(data);
-                    history.replace(from);
+                    history.push(from);
                 }
 
                 else{
