@@ -3,18 +3,18 @@ import "./Applicant.css";
 const Applicant = ({ applicant }) => {
   return (
     <div className="col-md-12 m-4 card">
-      <div className="d-flex row">
+      <div className="d-flex row border border-primary"  style={{ background: "#d2f7e6" }}>
         <div className="applicants-image-div col-md-4">
           <img
-            className="img-fluid"
+            className="img-fluid border border-success"
             style={{ height: "300px",marginTop:"35px" }}
             src={applicant.imageURL}
             alt="img"
           />
         </div>
         <div className="p-3 card-body col-md-8">
-          <fieldset class="border p-4 mb-4">
-            <legend class="w-auto">
+          <fieldset className="border p-4 mb-4">
+            <legend className="w-auto">
               <h3>Personal Information</h3>
             </legend>
             <div className="row">
@@ -22,12 +22,13 @@ const Applicant = ({ applicant }) => {
               <p className="col-md-6">Father Name: {applicant.fatherName}</p>
               <p className="col-md-6">Mother Name: {applicant.motherName}</p>
               <p className="col-md-6">Gender: {applicant.gender}</p>
-              <p className="col-md-6">Date Of Birth: {applicant.dateOfBirth}</p>
+              <p className="col-md-6">Date Of Birth: {applicant.dateOfBirth.split('T')[0]}</p>
               <p className="col-md-6">Mobile: {applicant.mobile}</p>
+              <p className="col-md-6">Email: {applicant.email}</p>
             </div>
           </fieldset>
-          <fieldset class="border p-4 mb-4">
-            <legend class="w-auto">
+          <fieldset className="border p-4 mb-4">
+            <legend className="w-auto">
               <h3>Present Address</h3>
             </legend>
             <div className="row">
@@ -40,8 +41,8 @@ const Applicant = ({ applicant }) => {
               <p className="col-md-6">District: {applicant.district}</p>
             </div>
           </fieldset>
-          <fieldset class="border p-4 mb-4">
-            <legend class="w-auto">
+          <fieldset className="border p-4 mb-4">
+            <legend className="w-auto">
               <h3>Present Address</h3>
             </legend>
             <div className="row">
@@ -54,8 +55,8 @@ const Applicant = ({ applicant }) => {
               <p className="col-md-6">District: {applicant.pDistrict}</p>
             </div>
           </fieldset>
-          <fieldset class="border p-4 mb-4">
-            <legend class="w-auto">
+          <fieldset className="border p-4 mb-4">
+            <legend className="w-auto">
               <h3>Present Address</h3>
             </legend>
             <div className="row">
@@ -64,8 +65,8 @@ const Applicant = ({ applicant }) => {
               <p className="col-md-12">Subject: {applicant.subject}</p>
             </div>
           </fieldset>
-          <fieldset class="border p-4 mb-4">
-            <legend class="w-auto">
+          <fieldset className="border p-4 mb-4">
+            <legend className="w-auto">
               <h3>Present Address</h3>
             </legend>
             <div className="row">

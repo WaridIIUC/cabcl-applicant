@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import successpic from'./successful.png';
 
 const AddApplicant = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [successMessage, setSuccessMessage] = useState(false);
+  
 
   const {
     register,
@@ -14,15 +17,19 @@ const AddApplicant = () => {
     formState: { errors },
   } = useForm();
 
+  console.log("Date", startDate);
+
   const onSubmit = (data) => {
     console.log(data);
     const applicantData = {
+      designation: "MARKETING MANAGER",
       name: data.name,
       fatherName: data.fatherName,
       motherName: data.motherName,
       gender: data.gender,
-      dateOfBirth: data.dateOfBirth,
+      dateOfBirth: startDate,
       mobile: data.mobile,
+      email: data.email,
       imageURL: imageURL,
 
       presentAddress: data.presentAddress,
@@ -42,8 +49,8 @@ const AddApplicant = () => {
       degree: data.degree,
 
       experiences: data.experiences,
-      communicationSkill: Boolean(data.communicationSkill),
-      computerSkill: Boolean(data.computerSkill),
+      communicationSkill: data.communicationSkill,
+      computerSkill: data.computerSkill,
 
       createTime: new Date().toLocaleString() + "",
       updateTime: new Date().toLocaleString() + "",
@@ -57,13 +64,23 @@ const AddApplicant = () => {
         "content-type": "application/json",
       },
       body: JSON.stringify(applicantData),
-    }).then((res) => console.log("server side response", res));
+    }).then((res) => {
+      setSuccessMessage(true);
+      console.log("server side response", res)
+    });
   };
 
   const [imageURL, setImageURL] = useState(null);
 
   const handleImageUpload = (event) => {
     console.log(event.target.files[0]);
+
+    // Object.defineProperty(event.target.files[0], 'filename', {
+    //   writable: true,
+    //   value: "warid.png"
+    // });
+
+    console.log("new file", event.target.files[0]);
     const imageData = new FormData();
     imageData.set("key", "bae3b1a9b24ff4f781b345ab2cae65fc");
     imageData.append("image", event.target.files[0]);
@@ -72,6 +89,7 @@ const AddApplicant = () => {
       .post("https://api.imgbb.com/1/upload", imageData)
       .then(function (response) {
         setImageURL(response.data.data.display_url);
+        console.log("image response", response);
       })
       .catch(function (error) {
         console.log(error);
@@ -79,12 +97,22 @@ const AddApplicant = () => {
   };
 
   return (
+    <div>
+      {successMessage &&
+      <div className="d-flex justify-content-center" >
+        <img className="img-fluid" src={successpic} alt="successful submission" />
+      </div>
+      }
+      
+    
+    {!successMessage &&
     <div className="container" style={{ background: "#d2f7e6" }}>
       <h1 className="text-center m-5 pt-5">Application form</h1>
-
+      <h6 className="text-center"><u>Designation: MARKETING MANAGER</u></h6>
+      
       <form onSubmit={handleSubmit(onSubmit)}>
-        <fieldset class="border p-4 mb-4">
-          <legend class="w-auto">
+        <fieldset className="border p-4 mb-4">
+          <legend className="w-auto">
             <h3>Personal Information</h3>
           </legend>
           <div className="row">
@@ -94,7 +122,7 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("name", { required: true })}
               />
-              {errors.name && <span>This field is required</span>}
+              {errors.name && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="fatherName">Father Name </label>
@@ -102,7 +130,7 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("fatherName", { required: true })}
               />
-              {errors.fatherName && <span>This field is required</span>}
+              {errors.fatherName && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="motherName">Mother Name </label>
@@ -110,7 +138,7 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("motherName", { required: true })}
               />
-              {errors.motherName && <span>This field is required</span>}
+              {errors.motherName && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="gender">Gender </label>
@@ -124,23 +152,24 @@ const AddApplicant = () => {
                 {...register("gender", { required: true })}
               >
                 <option value="">Select Gender</option>
-                <option value="1">Male</option>
-                <option value="2">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
-              {errors.gender && <span>This field is required</span>}
+              {errors.gender && <span  className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-6">
-              <label htmlFor="dateOfBirth">Date Of Birth </label>
+              <label htmlFor="dateOfBirth">Date Of Birth (month/day/year)</label>
               {/* <input
                 className="form-control"
                 {...register("dateOfBirth", { required: true })}
               />
-              {errors.dateOfBirth && <span>This field is required</span>} */}
+              {errors.dateOfBirth && <span  className="text-danger">This field is required</span>} */}
               <DatePicker
                 className="form-control"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               />
+              {errors.dateOfBirth && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="mobile">Mobile </label>
@@ -148,7 +177,7 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("mobile", { required: true })}
               />
-              {errors.mobile && <span>This field is required</span>}
+              {errors.mobile && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="file">Applicant Image </label>
@@ -158,13 +187,22 @@ const AddApplicant = () => {
                 {...register("imageUpload", { required: true })}
                 onChange={handleImageUpload}
               />
-              {errors.imageUpload && <span>This field is required</span>}
+              {errors.imageUpload && <span className="text-danger">This field is required</span>}
             </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="email">Email </label>
+              <input
+                className="form-control"
+                {...register("email", { required: true })}
+              />
+              {errors.email && <span className="text-danger">This field is required</span>}
+            </div>
+            
           </div>
         </fieldset>
 
-        <fieldset class="border p-4 mb-4">
-          <legend class="w-auto">
+        <fieldset className="border p-4 mb-4">
+          <legend className="w-auto">
             <h3>Address</h3>
           </legend>
           <div className="row">
@@ -176,7 +214,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("presentAddress", { required: true })}
                   />
-                  {errors.presentAddress && <span>This field is required</span>}
+                  {errors.presentAddress && <span  className="text-danger">This field is required</span>}
                 </div>
                 <div className="form-group col-md-12">
                   <label htmlFor="area">Area </label>
@@ -184,7 +222,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("area", { required: true })}
                   />
-                  {errors.area && <span>This field is required</span>}
+                  {errors.area && <span  className="text-danger">This field is required</span>}
                 </div>
                 <div className="form-group col-md-12">
                   <label htmlFor="postOffice">Post Office </label>
@@ -192,7 +230,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("postOffice", { required: true })}
                   />
-                  {errors.postOffice && <span>This field is required</span>}
+                  {errors.postOffice && <span  className="text-danger">This field is required</span>}
                 </div>
                 <div className="form-group col-md-12">
                   <label htmlFor="pS">Thana </label>
@@ -200,7 +238,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("pS", { required: true })}
                   />
-                  {errors.pS && <span>This field is required</span>}
+                  {errors.pS && <span  className="text-danger">This field is required</span>}
                 </div>
                 <div className="form-group col-md-12">
                   <label htmlFor="district">District </label>
@@ -208,7 +246,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("district", { required: true })}
                   />
-                  {errors.district && <span>This field is required</span>}
+                  {errors.district && <span  className="text-danger">This field is required</span>}
                 </div>
               </div>
             </div>
@@ -221,7 +259,7 @@ const AddApplicant = () => {
                     {...register("permanentAddress", { required: true })}
                   />
                   {errors.permanentAddress && (
-                    <span>This field is required</span>
+                    <span className="text-danger">This field is required</span>
                   )}
                 </div>
                 <div className="form-group col-md-12">
@@ -230,7 +268,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("pArea", { required: true })}
                   />
-                  {errors.pArea && <span>This field is required</span>}
+                  {errors.pArea && <span  className="text-danger">This field is required</span>}
                 </div>
                 <div className="form-group col-md-12">
                   <label htmlFor="pPostOffice">Post Office </label>
@@ -238,7 +276,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("pPostOffice", { required: true })}
                   />
-                  {errors.pPostOffice && <span>This field is required</span>}
+                  {errors.pPostOffice && <span  className="text-danger">This field is required</span>}
                 </div>
                 <div className="form-group col-md-12">
                   <label htmlFor="pPS">Thana </label>
@@ -246,7 +284,7 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("pPS", { required: true })}
                   />
-                  {errors.pPS && <span>This field is required</span>}
+                  {errors.pPS && <span  className="text-danger">This field is required</span>}
                 </div>
                 <div className="form-group col-md-12">
                   <label htmlFor="pDistrict">District </label>
@@ -254,15 +292,15 @@ const AddApplicant = () => {
                     className="form-control"
                     {...register("pDistrict", { required: true })}
                   />
-                  {errors.pDistrict && <span>This field is required</span>}
+                  {errors.pDistrict && <span  className="text-danger">This field is required</span>}
                 </div>
               </div>
             </div>
           </div>
         </fieldset>
 
-        <fieldset class="border p-4 mb-4">
-          <legend class="w-auto">
+        <fieldset className="border p-4 mb-4">
+          <legend className="w-auto">
             <h3>Educational Information</h3>
           </legend>
           <div className="row">
@@ -272,7 +310,7 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("university", { required: true })}
               />
-              {errors.university && <span>This field is required</span>}
+              {errors.university && <span  className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-12">
               <label htmlFor="subject">Subject </label>
@@ -280,7 +318,7 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("subject", { required: true })}
               />
-              {errors.subject && <span>This field is required</span>}
+              {errors.subject && <span  className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-12">
               <label htmlFor="degree">Degree </label>
@@ -288,13 +326,13 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("degree", { required: true })}
               />
-              {errors.degree && <span>This field is required</span>}
+              {errors.degree && <span  className="text-danger">This field is required</span>}
             </div>
           </div>
         </fieldset>
 
-        <fieldset class="border p-4 mb-4">
-          <legend class="w-auto">
+        <fieldset className="border p-4 mb-4">
+          <legend className="w-auto">
             <h3>Experiences</h3>
           </legend>
           <div className="row">
@@ -304,28 +342,64 @@ const AddApplicant = () => {
                 className="form-control"
                 {...register("experiences", { required: true })}
               />
-              {errors.experiences && <span>This field is required</span>}
+              {errors.experiences && <span  className="text-danger">This field is required</span>}
             </div>
+            <div className="form-group col-md-12">
+            <label htmlFor="communicationSkill">Do you have good communication skill?</label>
+              {/* <input
+                className="form-control"
+                {...register("gender", { required: true })}
+              /> */}
+              <select
+                className="form-control"
+                name="func"
+                {...register("communicationSkill", { required: true })}
+              >
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+              {errors.communicationSkill && <span  className="text-danger">This field is required</span>}
+              </div>
+              <div className="form-group col-md-12">
+                <label htmlFor="computerSkill">Do you have adequate computer literacy to work MS Office packages?</label>
+                  {/* <input
+                    className="form-control"
+                    {...register("gender", { required: true })}
+                  /> */}
+                  <select
+                    className="form-control"
+                    name="func"
+                    {...register("computerSkill", { required: true })}
+                  >
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                  {errors.computerSkill && <span  className="text-danger">This field is required</span>}
+              </div>
             {/* <div className="form-group col-md-12">
               <label htmlFor="communicationSkill">Communication Skill </label>
               <input className="form-control" {...register("communicationSkill", { required: true })} />
-              {errors.communicationSkill && <span>This field is required</span>}
+              {errors.communicationSkill && <span  className="text-danger">This field is required</span>}
             </div>
             <div className="form-group col-md-12">
               <label htmlFor="computerSkill">Computer Skill </label>
               <input className="form-control" {...register("computerSkill", { required: true })} />
-              {errors.computerSkill && <span>This field is required</span>}
+              {errors.computerSkill && <span  className="text-danger">This field is required</span>}
             </div> */}
           </div>
         </fieldset>
         {/* <input {...register("createTime", { required: true })} />
-            {errors.createTime && <span>This field is required</span>}
+            {errors.createTime && <span  className="text-danger">This field is required</span>}
 
             <input {...register("updateTime", { required: true })} />
-            {errors.updateTime && <span>This field is required</span>} */}
+            {errors.updateTime && <span  className="text-danger">This field is required</span>} */}
 
         <input className="btn btn-info mb-5" type="submit" />
       </form>
+    </div>
+}
     </div>
   );
 };

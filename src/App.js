@@ -13,7 +13,9 @@ function App() {
 
   console.log("1st", loggedInUser);
   useEffect(() => {
-    if (localStorage.length > 0) {
+    // if (localStorage.length > 0) {
+    if (localStorage.getItem("cabcl-admin") !== null) {
+
       const adminInfo = {
         email: JSON.parse(localStorage.getItem("cabcl-admin")).email,
         name: JSON.parse(localStorage.getItem("cabcl-admin")).name,
@@ -32,8 +34,8 @@ function App() {
       <Router>
         <div>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link className="navbar-brand" to="/">
-              CABCL
+            <Link className="text-primary navbar-brand" to="/">
+              Creative AB Corporation Ltd.
             </Link>
             <button
               className="navbar-toggler"
@@ -50,15 +52,15 @@ function App() {
               <ul className="navbar-nav">
                 <li className="nav-item active">
                   <Link className="nav-link text-uppercase" to="/">
-                    add Applicant
+                  <span className="p-2 text-primary rounded border border-primary">Home</span>
                   </Link>
                 </li>
                 <li className="nav-item active">
-                <Link className="nav-link text-uppercase" to="/applicants">Applicants</Link>
+                <Link className="nav-link text-uppercase" to="/applicants"><span className="p-2 text-success rounded border border-success">Login</span></Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                 <Link style={{padding:"10px 20px"}} className="nav-link btn btn-info" to="/login">Login</Link>
-                </li>
+                </li> */}
                 
               </ul>
             </div>

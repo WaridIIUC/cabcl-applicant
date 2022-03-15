@@ -58,7 +58,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container w-25">
+    <div className="container col-md-4">
       <h1 className="text-center m-5">Login</h1>
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
