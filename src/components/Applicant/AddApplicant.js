@@ -75,8 +75,8 @@ const AddApplicant = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="text-center mb-3">Application form</h1>
+    <div className="container" style={{background:"#d2f7e6"}}>
+      <h1 className="text-center m-5 pt-5">Application form</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset class="border p-4 mb-4">
@@ -285,7 +285,7 @@ const AddApplicant = () => {
               <input className="form-control" {...register("experiences", { required: true })} />
               {errors.experiences && <span>This field is required</span>}
             </div>
-            <div className="form-group col-md-12">
+            {/* <div className="form-group col-md-12">
               <label htmlFor="communicationSkill">Communication Skill </label>
               <input className="form-control" {...register("communicationSkill", { required: true })} />
               {errors.communicationSkill && <span>This field is required</span>}
@@ -294,7 +294,7 @@ const AddApplicant = () => {
               <label htmlFor="computerSkill">Computer Skill </label>
               <input className="form-control" {...register("computerSkill", { required: true })} />
               {errors.computerSkill && <span>This field is required</span>}
-            </div>
+            </div> */}
           </div>
         </fieldset>
         {/* <input {...register("createTime", { required: true })} />
