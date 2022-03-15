@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddApplicant = () => {
+  const [startDate, setStartDate] = useState(new Date());
+
   const {
     register,
     handleSubmit,
@@ -75,7 +79,7 @@ const AddApplicant = () => {
   };
 
   return (
-    <div className="container" style={{background:"#d2f7e6"}}>
+    <div className="container" style={{ background: "#d2f7e6" }}>
       <h1 className="text-center m-5 pt-5">Application form</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -110,19 +114,33 @@ const AddApplicant = () => {
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="gender">Gender </label>
-              <input
+              {/* <input
                 className="form-control"
                 {...register("gender", { required: true })}
-              />
+              /> */}
+              <select
+                className="form-control"
+                name="func"
+                {...register("gender", { required: true })}
+              >
+                <option value="">Select Gender</option>
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+              </select>
               {errors.gender && <span>This field is required</span>}
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="dateOfBirth">Date Of Birth </label>
-              <input
+              {/* <input
                 className="form-control"
                 {...register("dateOfBirth", { required: true })}
               />
-              {errors.dateOfBirth && <span>This field is required</span>}
+              {errors.dateOfBirth && <span>This field is required</span>} */}
+              <DatePicker
+                className="form-control"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              />
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="mobile">Mobile </label>
@@ -282,7 +300,10 @@ const AddApplicant = () => {
           <div className="row">
             <div className="form-group col-md-12">
               <label htmlFor="experiences">Experiences </label>
-              <input className="form-control" {...register("experiences", { required: true })} />
+              <input
+                className="form-control"
+                {...register("experiences", { required: true })}
+              />
               {errors.experiences && <span>This field is required</span>}
             </div>
             {/* <div className="form-group col-md-12">
