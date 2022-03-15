@@ -10,6 +10,7 @@ import Applicants from './components/Applicant/Applicants';
 import Login from './components/Login/Login';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import { createContext, useState } from 'react';
+import { useEffect } from 'react';
 export const UserContext = createContext();
 
 
@@ -17,6 +18,24 @@ export const UserContext = createContext();
 function App() {
 
   const [loggedInUser, setLoggedInUser] = useState({});
+
+  console.log("1st", loggedInUser);
+  useEffect(() => {
+
+    if (localStorage.length > 0){
+    const adminInfo = {
+      email: JSON.parse(localStorage.getItem("cabcl-admin")).email,
+      name: JSON.parse(localStorage.getItem("cabcl-admin")).name,
+      password: JSON.parse(localStorage.getItem("cabcl-admin")).password
+    };
+
+    console.log("local", adminInfo);
+    setLoggedInUser(adminInfo);
+  }
+}, [])
+
+console.log("2st", loggedInUser);
+
   
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>

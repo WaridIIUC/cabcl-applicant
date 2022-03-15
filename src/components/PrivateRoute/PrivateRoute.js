@@ -4,6 +4,12 @@ import { UserContext } from '../../App';
 
 const PrivateRoute = ({children, ...rest}) => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    
+    if (localStorage.length > 0){
+        loggedInUser.email = JSON.parse(localStorage.getItem("cabcl-admin")).email;
+        console.log("logged ", loggedInUser.email);
+    }
+    
     return (
         <Route
             {...rest}
