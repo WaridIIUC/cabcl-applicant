@@ -11,11 +11,15 @@ export const UserContext = createContext();
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({});
 
+  const [stringForServerSideResponse, setStringForServerSideResponse] = useState("mU%pvGSS'vC7#:s*687uI^6Oysk'TO");
+  const [isLogin, setIsLogin] = useState(false);
+
+
   console.log("1st", loggedInUser);
   useEffect(() => {
     // if (localStorage.length > 0) {
     if (localStorage.getItem("cabcl-admin") !== null) {
-
+      if(JSON.parse(localStorage.getItem("cabcl-admin")).rowE2AuJ9mblCs6W37DWfuW4bf9zAd === stringForServerSideResponse){
       const adminInfo = {
         email: JSON.parse(localStorage.getItem("cabcl-admin")).email,
         name: JSON.parse(localStorage.getItem("cabcl-admin")).name,
@@ -25,6 +29,7 @@ function App() {
       console.log("local", adminInfo);
       setLoggedInUser(adminInfo);
     }
+  }
   }, []);
 
   console.log("2st", loggedInUser);
@@ -58,6 +63,12 @@ function App() {
                 <li className="nav-item active">
                 <Link className="nav-link text-uppercase" to="/applicants"><span className="p-2 text-success rounded border border-success">Login</span></Link>
                 </li>
+
+                <li className="nav-item active">
+                  <button className='btn btn-danger ml-3'>Logout</button>
+                </li>
+
+                
                 {/* <li className="nav-item">
                 <Link style={{padding:"10px 20px"}} className="nav-link btn btn-info" to="/login">Login</Link>
                 </li> */}

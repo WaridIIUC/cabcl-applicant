@@ -15,12 +15,23 @@ const Login = () => {
   const location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };
 
+  const [stringForServerSideResponse, setStringForServerSideResponse] = useState("mU%pvGSS'vC7#:s*687uI^6Oysk'TO");
+
+
   const onSubmit = (data) => {
     console.log(data);
     const adminData = {
       email: data.email,
       password: data.password,
     };
+
+    const newAdminDataForLocalStorage = {
+      _id:"",
+      name:"",
+      email:"",
+      passwordAdmin:"",
+      rowE2AuJ9mblCs6W37DWfuW4bf9zAd: "",
+    }
 
     console.log("admin", adminData);
 
@@ -36,7 +47,12 @@ const Login = () => {
       .then((data) => {
         console.log("admin db", data);
         if (data != "") {
-          localStorage.setItem("cabcl-admin", JSON.stringify(data));
+          newAdminDataForLocalStorage._id = data._id;
+          newAdminDataForLocalStorage.email = data.email;
+          newAdminDataForLocalStorage.name = data.name;
+          newAdminDataForLocalStorage.password = data.passwordAdmin;
+          newAdminDataForLocalStorage.rowE2AuJ9mblCs6W37DWfuW4bf9zAd = stringForServerSideResponse;
+          localStorage.setItem("cabcl-admin", JSON.stringify(newAdminDataForLocalStorage));
           setLoggedInUser(data);
           history.push(from);
         } else {
