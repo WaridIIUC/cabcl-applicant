@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { createContext, useState } from "react";
 import { useEffect } from "react";
+import { Navbar, Container, Nav } from "react-bootstrap";
 export const UserContext = createContext();
 
 function App() {
@@ -38,44 +39,30 @@ function App() {
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
         <div>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <Navbar bg="light" expand="lg">
+            {/* <Container> */}
             <Link className="text-primary navbar-brand" to="/">
               Creative AB Corporation Ltd.
             </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item active">
-                  <Link className="nav-link text-uppercase" to="/">
-                  <span className="p-2 text-primary rounded border border-primary">Home</span>
-                  </Link>
-                </li>
-                <li className="nav-item active">
-                <Link className="nav-link text-uppercase" to="/applicants"><span className="p-2 text-success rounded border border-success">Login</span></Link>
-                </li>
-
-                <li className="nav-item active">
-                  <button className='btn btn-danger ml-3'>Logout</button>
-                </li>
-
-                
-                {/* <li className="nav-item">
-                <Link style={{padding:"10px 20px"}} className="nav-link btn btn-info" to="/login">Login</Link>
-                </li> */}
-                
-              </ul>
-            </div>
-          </nav>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse className=" justify-content-end" id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Link className="nav-link text-uppercase mb-2" to="/">
+                  <span className="p-2 text-primary rounded border border-primary">
+                    Home
+                  </span>
+                </Link>
+                {/* <Nav.Link> */}
+                <Link className="nav-link text-uppercase" to="/applicants">
+                  <span className="p-2 text-success rounded border border-success">
+                    Login
+                  </span>
+                </Link>
+                {/* </Nav.Link> */}
+              </Nav>
+            </Navbar.Collapse>
+            {/* </Container> */}
+          </Navbar>
           {/* <ul>
             <li>
               <Link to="/">addApplicant</Link>
