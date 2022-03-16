@@ -5,7 +5,7 @@ import { UserContext } from '../../App';
 const PrivateRoute = ({children, ...rest}) => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     
-    if (localStorage.length > 0){
+    if (localStorage.getItem("cabcl-admin") !== null){
         loggedInUser.email = JSON.parse(localStorage.getItem("cabcl-admin")).email;
         console.log("logged ", loggedInUser.email);
     }
