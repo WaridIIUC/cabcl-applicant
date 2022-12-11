@@ -10,7 +10,7 @@ const PrivateRoute = ({children, ...rest}) => {
     if (localStorage.getItem("cabcl-admin") !== null){
         if(JSON.parse(localStorage.getItem("cabcl-admin")).rowE2AuJ9mblCs6W37DWfuW4bf9zAd === stringForServerSideResponse){
         loggedInUser.email = JSON.parse(localStorage.getItem("cabcl-admin")).email;
-        console.log("logged ", loggedInUser.email);
+        // console.log("logged ", loggedInUser.email);
         }
     }
     

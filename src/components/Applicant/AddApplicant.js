@@ -17,10 +17,11 @@ const AddApplicant = () => {
     formState: { errors },
   } = useForm();
 
-  console.log("Date", startDate);
+  // console.log("Date", startDate);
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
+    document.querySelector("#loadingMessage").classList.remove("invisible");
     const applicantData = {
       designation: "MARKETING MANAGER",
       name: data.name,
@@ -30,6 +31,7 @@ const AddApplicant = () => {
       dateOfBirth: startDate,
       mobile: data.mobile,
       email: data.email,
+      facebook: data.facebook,
       imageURL: imageURL,
 
       presentAddress: data.presentAddress,
@@ -52,12 +54,27 @@ const AddApplicant = () => {
       communicationSkill: data.communicationSkill,
       computerSkill: data.computerSkill,
 
+      rfPName: data.rfPName,
+      rfPAddress: data.rfPAddress,
+      rfPDesignation: data.rfPDesignation,
+      rfPMobile: data.rfPMobile,
+      rfPEmail: data.rfPEmail,
+
+
+      rfP2Name: data.rfP2Name,
+      rfP2Address: data.rfP2Address,
+      rfP2Designation: data.rfP2Designation,
+      rfP2Mobile: data.rfP2Mobile,
+      rfP2Email: data.rfP2Email,
+      
+
+
       createTime: new Date().toLocaleString() + "",
       updateTime: new Date().toLocaleString() + "",
 
       isDeleted: false,
     };
-    const url = `http://localhost:5000/addApplicant`;
+    const url = `https://radiant-garden-87142.herokuapp.com/addApplicant`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -65,22 +82,26 @@ const AddApplicant = () => {
       },
       body: JSON.stringify(applicantData),
     }).then((res) => {
+    
+      document.querySelector("#loadingMessage").classList.add("invisible");
+
       setSuccessMessage(true);
-      console.log("server side response", res)
+      
+      // console.log("server side response", res)
     });
   };
 
   const [imageURL, setImageURL] = useState(null);
 
   const handleImageUpload = (event) => {
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
 
     // Object.defineProperty(event.target.files[0], 'filename', {
     //   writable: true,
     //   value: "warid.png"
     // });
 
-    console.log("new file", event.target.files[0]);
+    // console.log("new file", event.target.files[0]);
     const imageData = new FormData();
     imageData.set("key", "bae3b1a9b24ff4f781b345ab2cae65fc");
     imageData.append("image", event.target.files[0]);
@@ -89,7 +110,7 @@ const AddApplicant = () => {
       .post("https://api.imgbb.com/1/upload", imageData)
       .then(function (response) {
         setImageURL(response.data.data.display_url);
-        console.log("image response", response);
+        // console.log("image response", response);
       })
       .catch(function (error) {
         console.log(error);
@@ -104,10 +125,10 @@ const AddApplicant = () => {
       </div>
       }
       
-    
+    <h6 className="text-center text-info">If you face any problem on application, please call us on our contact number. <a href="https://cabcl-bd.com/contact">Contact Detail</a></h6>
     {!successMessage &&
     <div className="container" style={{ background: "#d2f7e6" }}>
-      <h1 className="text-center m-5 pt-5">Application form</h1>
+      <h1 className="text-center m-3 pt-5">Application form</h1>
       <h6 className="text-center"><u>Designation: MARKETING MANAGER</u></h6>
       
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -196,6 +217,15 @@ const AddApplicant = () => {
                 {...register("email", { required: true })}
               />
               {errors.email && <span className="text-danger">This field is required</span>}
+            </div>
+
+            <div className="form-group col-md-6">
+              <label htmlFor="facebook">Facebook Profile Link </label>
+              <input
+                className="form-control"
+                {...register("facebook", { required: true })}
+              />
+              {errors.facebook && <span className="text-danger">This field is required</span>}
             </div>
             
           </div>
@@ -390,6 +420,114 @@ const AddApplicant = () => {
             </div> */}
           </div>
         </fieldset>
+
+
+
+        <fieldset className="border p-4 mb-4">
+          <legend className="w-auto">
+            <h3>References <span className="h6">(You must give 2 person references here)</span></h3>
+          </legend>
+          <p className="text-primary">Person 1 Information</p>
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label htmlFor="rfPName">Person Name </label>
+              <input
+                className="form-control"
+                {...register("rfPName", { required: true })}
+              />
+              {errors.rfPName && <span className="text-danger">This field is required</span>}
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="rfPAddress">Address </label>
+              <input
+                className="form-control"
+                {...register("rfPAddress", { required: true })}
+              />
+              {errors.rfPAddress && <span className="text-danger">This field is required</span>}
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="rfPDesignation">Designation & Organization Name</label>
+              <input
+                className="form-control"
+                {...register("rfPDesignation", { required: true })}
+              />
+              {errors.rfPDesignation && <span className="text-danger">This field is required</span>}
+            </div>
+            
+            <div className="form-group col-md-6">
+              <label htmlFor="rfPMobile">Mobile </label>
+              <input
+                className="form-control"
+                {...register("rfPMobile", { required: true })}
+              />
+              {errors.rfPMobile && <span className="text-danger">This field is required</span>}
+            </div>
+    
+            <div className="form-group col-md-6">
+              <label htmlFor="rfPEmail">Email </label>
+              <input
+                className="form-control"
+                {...register("rfPEmail", { required: true })}
+              />
+              {errors.rfPEmail && <span className="text-danger">This field is required</span>}
+            </div>
+            
+          </div>
+
+          <div>
+            <p className="text-primary">Person 2 Information</p>
+          </div>
+
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label htmlFor="rfP2Name">Person Name </label>
+              <input
+                className="form-control"
+                {...register("rfP2Name", { required: true })}
+              />
+              {errors.rfP2Name && <span className="text-danger">This field is required</span>}
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="rfP2Address">Address </label>
+              <input
+                className="form-control"
+                {...register("rfP2Address", { required: true })}
+              />
+              {errors.rfP2Address && <span className="text-danger">This field is required</span>}
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="rfP2Designation">Designation & Organization Name</label>
+              <input
+                className="form-control"
+                {...register("rfP2Designation", { required: true })}
+              />
+              {errors.rfP2Designation && <span className="text-danger">This field is required</span>}
+            </div>
+            
+            <div className="form-group col-md-6">
+              <label htmlFor="rfP2Mobile">Mobile </label>
+              <input
+                className="form-control"
+                {...register("rfP2Mobile", { required: true })}
+              />
+              {errors.rfP2Mobile && <span className="text-danger">This field is required</span>}
+            </div>
+    
+            <div className="form-group col-md-6">
+              <label htmlFor="rfP2Email">Email </label>
+              <input
+                className="form-control"
+                {...register("rfP2Email", { required: true })}
+              />
+              {errors.rfP2Email && <span className="text-danger">This field is required</span>}
+            </div>
+            
+          </div>
+        </fieldset>
+        
+        <p id="loadingMessage" className="invisible text-success">
+          Your application is processing. Please Wait...
+        </p>
         {/* <input {...register("createTime", { required: true })} />
             {errors.createTime && <span  className="text-danger">This field is required</span>}
 
@@ -398,6 +536,9 @@ const AddApplicant = () => {
 
         <input className="btn btn-info mb-5" type="submit" />
       </form>
+      <p id="loadingMessage" className="invisible text-success">
+          Your application is processing. Please Wait...
+        </p>
     </div>
 }
     </div>

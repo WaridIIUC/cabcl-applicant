@@ -16,7 +16,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
 
 
-  console.log("1st", loggedInUser);
+  // console.log("1st", loggedInUser);
   useEffect(() => {
     // if (localStorage.length > 0) {
     if (localStorage.getItem("cabcl-admin") !== null) {
@@ -27,13 +27,13 @@ function App() {
         password: JSON.parse(localStorage.getItem("cabcl-admin")).password,
       };
 
-      console.log("local", adminInfo);
+      // console.log("local", adminInfo);
       setLoggedInUser(adminInfo);
     }
   }
   }, []);
 
-  console.log("2st", loggedInUser);
+  // console.log("2st", loggedInUser);
 
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>

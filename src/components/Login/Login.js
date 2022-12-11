@@ -19,7 +19,8 @@ const Login = () => {
 
 
   const onSubmit = (data) => {
-    console.log(data);
+    document.querySelector("#loadingMessage").classList.remove("invisible");
+    // console.log(data);
     const adminData = {
       email: data.email,
       password: data.password,
@@ -33,9 +34,9 @@ const Login = () => {
       rowE2AuJ9mblCs6W37DWfuW4bf9zAd: "",
     }
 
-    console.log("admin", adminData);
+    // console.log("admin", adminData);
 
-    const url = `http://localhost:5000/adminLogin`;
+    const url = `https://radiant-garden-87142.herokuapp.com/adminLogin`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -45,7 +46,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("admin db", data);
+        // console.log("admin db", data);
         if (data != "") {
           newAdminDataForLocalStorage._id = data._id;
           newAdminDataForLocalStorage.email = data.email;
@@ -56,12 +57,12 @@ const Login = () => {
           setLoggedInUser(data);
           history.push(from);
         } else {
-          console.log("password invalid", data.length);
+          // console.log("password invalid", data.length);
 
-          console.log(document.querySelector("#errorMessage"));
+          // console.log(document.querySelector("#errorMessage"));
           document.querySelector("#errorMessage").classList.remove("invisible");
-
-          console.log(document.querySelector("#errorMessage"));
+          document.querySelector("#loadingMessage").classList.add("invisible");
+          // console.log(document.querySelector("#errorMessage"));
         }
       });
 
@@ -88,7 +89,7 @@ const Login = () => {
 
         <div className="form-group">
         <label htmlFor="password">Password </label>
-        <input className="form-control" {...register("password", { required: true })} />
+        <input type = "password" className="form-control" {...register("password", { required: true })} />
         {errors.password && <span className="text-danger">This field is required</span>}
         </div>
        
@@ -98,6 +99,10 @@ const Login = () => {
 
         <p id="errorMessage" className="invisible text-danger">
           Email or Password is incorrect
+        </p>
+
+        <p id="loadingMessage" className="invisible text-success">
+          Please Wait...
         </p>
       </form>
     </div>

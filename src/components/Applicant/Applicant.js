@@ -25,6 +25,7 @@ const Applicant = ({ applicant }) => {
               <p className="col-md-6">Date Of Birth: {applicant.dateOfBirth.split('T')[0]}</p>
               <p className="col-md-6">Mobile: {applicant.mobile}</p>
               <p className="col-md-6">Email: {applicant.email}</p>
+              <p className="col-md-6">Facebook Profile Link: <a href = {applicant.facebook}>{applicant.facebook}</a></p>
             </div>
           </fieldset>
           <fieldset className="border p-4 mb-4">
@@ -43,7 +44,7 @@ const Applicant = ({ applicant }) => {
           </fieldset>
           <fieldset className="border p-4 mb-4">
             <legend className="w-auto">
-              <h3>Present Address</h3>
+              <h3>Permanent Address</h3>
             </legend>
             <div className="row">
               <p className="col-md-6">
@@ -57,7 +58,7 @@ const Applicant = ({ applicant }) => {
           </fieldset>
           <fieldset className="border p-4 mb-4">
             <legend className="w-auto">
-              <h3>Present Address</h3>
+              <h3>Educational Qualifications</h3>
             </legend>
             <div className="row">
               <p className="col-md-12">University: {applicant.university}</p>
@@ -67,7 +68,7 @@ const Applicant = ({ applicant }) => {
           </fieldset>
           <fieldset className="border p-4 mb-4">
             <legend className="w-auto">
-              <h3>Present Address</h3>
+              <h3>Experiences</h3>
             </legend>
             <div className="row">
               <p className="col-md-6">Experiences: {applicant.experiences}</p>
@@ -79,7 +80,33 @@ const Applicant = ({ applicant }) => {
               </p>
             </div>
           </fieldset>
-          <p className="col-md-12 text-center">
+
+          <fieldset className="border p-4 mb-4">
+            <legend className="w-auto">
+              <h3>References</h3>
+            </legend>
+            <p className="text-primary">Person 1 Information</p>
+            <div className="row">
+              <p className="col-md-6">Name: {applicant.rfPName}</p>
+              <p className="col-md-6">Address: {applicant.rfPAddress}</p>
+              <p className="col-md-6">Designation & Organization: {applicant.rfPDesignation}</p>
+              <p className="col-md-6">
+                Mobile: {applicant.rfPMobile}
+              </p>
+            </div>
+
+            <p className="text-primary">Person 2 Information</p>
+            <div className="row">
+              <p className="col-md-6">Name: {applicant.rfP2Name}</p>
+              <p className="col-md-6">Address: {applicant.rfP2Address}</p>
+              <p className="col-md-6">Designation & Organization: {applicant.rfP2Designation}</p>
+              <p className="col-md-6">
+                Mobile: {applicant.rfP2Mobile}
+              </p>
+            </div>
+
+          </fieldset>
+          <p className="col-md-12 text-center text-primary">
             Applied Date & Time: {applicant.createTime}
           </p>
         </div>
